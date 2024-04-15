@@ -1,0 +1,1380 @@
+20 marks slon
+
+slip no 2/10/
+
+1) registration form
+
+main activity
+
+package com.example.registrationform;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+    Button submit;
+    EditText name,email,password,number,age;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        number = findViewById(R.id.number);
+        age = findViewById(R.id.age);
+        submit = findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nme = name.getText().toString().trim();
+                String mail = email.getText().toString().trim();
+                String pass = password.getText().toString().trim();
+                String num = number.getText().toString().trim();
+                String age =  number.getText().toString().trim();
+
+                if(nme.isEmpty() || mail.isEmpty() || pass.isEmpty() || num.isEmpty() || age.isEmpty()){
+                    displayMessage("All fields are required.");
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Data Entered Successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void displayMessage(String message) {
+        MessageDialogFragment dialog = new MessageDialogFragment(message);
+        dialog.show(getSupportFragmentManager(), "MessageDialogFragment");
+    }
+
+
+}
+
+Messagedailoge fragment
+
+package com.example.registrationform;
+
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+
+public class MessageDialogFragment extends DialogFragment {
+
+    private String message;
+    private Button ok;
+
+    public MessageDialogFragment(String message) {
+        this.message = message;
+    }
+
+
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Close the dialog
+                        dialog.dismiss();
+                    }
+                });
+        return builder.create();
+    }
+}
+
+
+main act xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:text="Registration"
+        android:background="#A9B1B0"
+        android:textSize="20dp"
+        />
+    <EditText
+        android:layout_height="39dp"
+        android:layout_width="match_parent"
+        android:hint="Name"
+        android:layout_margin="13dp"
+        android:id="@+id/name"
+        />
+    <EditText
+        android:layout_height="39dp"
+        android:layout_width="match_parent"
+        android:hint="E-mail"
+        android:layout_margin="13dp"
+        android:id="@+id/email"
+        />
+    <EditText
+        android:layout_height="39dp"
+        android:layout_width="match_parent"
+        android:hint="Password"
+        android:layout_margin="13dp"
+        android:id="@+id/password"
+        />
+    <EditText
+        android:layout_height="39dp"
+        android:layout_width="match_parent"
+        android:hint="Age"
+        android:layout_margin="13dp"
+        android:id="@+id/age"
+        />
+    <EditText
+        android:layout_height="39dp"
+        android:layout_width="match_parent"
+        android:hint="Mobile No."
+        android:layout_margin="13dp"
+        android:id="@+id/number"
+        />
+    <Button
+        android:layout_height="39dp"
+        android:layout_width="match_parent"
+        android:text="Submit"
+        android:layout_margin="13dp"
+        android:background="@color/black"
+        android:id="@+id/submit"
+        />
+</LinearLayout>
+
+custom layoutdailogxml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Error"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please fill in all fields."
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>
+
+---------------------------------------------------------------------------------------
+slip 4 
+
+2)spinner
+
+main activity
+
+package com.example.spinner;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
+public class MainActivity extends AppCompatActivity {
+    Button Add,Remove;
+    EditText value;
+    Spinner spinner;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Add = findViewById(R.id.Add);
+        Remove = findViewById(R.id.remove);
+        value = findViewById(R.id.value);
+        spinner = findViewById(R.id.spinner);
+        List values = new ArrayList();
+        Add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputValue = value.getText().toString().trim();
+                if (!inputValue.isEmpty()) {
+                    values.add(inputValue);
+                    ArrayAdapter dataAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, values);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(dataAdapter);
+                    Toast.makeText(MainActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        Remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputValue = value.getText().toString().trim();
+                if (values.contains(inputValue)) {
+                    values.remove(inputValue);
+                    ArrayAdapter dataAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, values);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(dataAdapter);
+                    Toast.makeText(MainActivity.this, "Removed Successfully", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Value not Present", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+}
+
+main xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Item: "
+        >
+    </TextView>
+    <EditText
+
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:id="@+id/value"
+        >
+    </EditText>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        >
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:text="Add to Spinner"
+        android:id="@+id/Add"
+        />
+        <Button
+            android:layout_marginLeft="30dp"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:text="Remove from Spinner"
+            android:id="@+id/remove"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="See response Below :"
+            />
+        <Spinner
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
+--------------------------------------------------------------------------------------
+
+slip 5
+
+ 1)file explore
+
+main activity
+
+package com.example.fileexplorer;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
+public class MainActivity extends AppCompatActivity {
+    ListView list;
+    Button add,remove,search;
+    List fileExplorer =  new ArrayList();
+    EditText filename;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        list = findViewById(R.id.l1);
+        add = findViewById(R.id.add);
+        remove = findViewById(R.id.remove);
+        filename= findViewById(R.id.fn);
+        search = findViewById(R.id.search);
+        fileExplorer.add("Data");
+        fileExplorer.add("Android");
+        fileExplorer.add("DCMI");
+        fileExplorer.add("Download");
+        ArrayAdapter  adapter = new ArrayAdapter(MainActivity.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,fileExplorer);
+        list.setAdapter(adapter);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = filename.getText().toString().trim() ;
+                fileExplorer.add(name);
+                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item,fileExplorer);
+                list.setAdapter(adapter);
+            }
+        });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = filename.getText().toString().trim() ;
+                fileExplorer.remove(name);
+                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item,fileExplorer);
+                list.setAdapter(adapter);
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = filename.getText().toString().trim() ;
+                if(fileExplorer.contains(name)){
+                    int selectedId = list.getSelectedItemPosition();
+                    Toast.makeText(MainActivity.this, "File present at "+selectedId, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+}
+
+main xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter File Name"
+        android:id="@+id/fn"
+        />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="+"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/add"
+            />
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="-"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/remove"
+            />
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="search"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/search"
+            />
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/l1"
+        />
+
+</LinearLayout>
+
+---------------------------------------------------------------------------------
+
+slip 11
+
+1)contact
+
+main act
+
+package com.tybca03.contact;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
+    public class MainActivity extends AppCompatActivity {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+    public void onInsert(View v){
+        Intent i=new Intent(this,Contact.class);
+        startActivity(i);
+    }
+}
+contact act
+
+package com.tybca03.contact;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class Contact extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contact);
+    }
+}
+
+main xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Insert Contact"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="15dp"
+        android:onClick="onInsert"
+        />
+</RelativeLayout>
+
+acctcontacxml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/r1">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/contact_img"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="60dp"
+            android:id="@+id/img1"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img1"
+            android:layout_marginTop="65dp"
+            android:text="Create Contact"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/create"
+            />
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img1"
+            android:layout_below="@id/create"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:text="Update Existing" />
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/phone"
+            android:layout_below="@id/img1"
+            android:id="@+id/phone"
+            android:layout_marginLeft="20dp"
+            />
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/album"
+            android:layout_below="@id/img1"
+            android:layout_toRightOf="@id/phone"
+            android:layout_marginLeft="20dp"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile\n(650)253-0000"
+            android:textSize="30sp" />
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/call"/>
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/msg"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Record Inserted"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</LinearLayout>
+
+-------------------------------------------------------------------------
+
+slip 14 / slip 15/ 13 /11/3/2
+
+1) accept student details and show on next acticity / emp /movies 
+
+main activity
+
+package com.example.studentinfo;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends Activity {
+
+    private EditText e1,e2,e3,e4,e5,e6;
+    private Button b1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        e1 = findViewById(R.id.fname);
+        e2=findViewById(R.id.mname);
+        e3=findViewById(R.id.lname);
+        e4=findViewById(R.id.add);
+        e5=findViewById(R.id.dob);
+        e6=findViewById(R.id.eid);
+        b1 = findViewById(R.id.b1);
+
+       b1.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               String n = e1.getText().toString();
+               String n2 = e2.getText().toString();
+               String n3 = e3.getText().toString();
+               String n4 = e4.getText().toString();
+               String n5 = e5.getText().toString();
+               String n6 = e6.getText().toString();
+
+               Intent  i = new Intent(MainActivity.this,MainActivity2.class);
+               i.putExtra("d1", n);
+               i.putExtra("d2", n2);
+               i.putExtra("d3", n3);
+               i.putExtra("d4", n4);
+               i.putExtra("d5", n5);
+               i.putExtra("d6", n6);
+
+               startActivity(i);
+           }
+       });
+
+    }
+}
+
+mainacitivit2
+
+package com.example.studentinfo;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity2 extends Activity {
+
+    TextView t1, t2, t3, t4, t5, t6;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.act2);
+
+        t1 = findViewById(R.id.e1);
+        t2 = findViewById(R.id.e2);
+        t3 = findViewById(R.id.e3);
+        t4 = findViewById(R.id.e4);
+        t5 = findViewById(R.id.e5);
+        t6 = findViewById(R.id.e6);
+
+        t1.setText(getIntent().getStringExtra("d1"));
+        t2.setText(getIntent().getStringExtra("d2"));
+        t3.setText(getIntent().getStringExtra("d3"));
+        t4.setText(getIntent().getStringExtra("d4"));
+        t5.setText(getIntent().getStringExtra("d5"));
+        t6.setText(getIntent().getStringExtra("d6"));
+    }
+}
+
+main xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="student information" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/fname"
+        android:layout_width="244dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:hint="First Name" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/mname"
+        android:layout_width="244dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:hint="Middle Name" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/lname"
+        android:layout_width="243dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:hint="last Name" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/dob"
+        android:layout_width="241dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:hint="Date Of Birth" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/add"
+        android:layout_width="241dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:hint="Address" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/eid"
+        android:layout_width="241dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:hint="Email id" />
+
+
+    <Button
+        android:id="@+id/b1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:layout_marginTop="20dp"
+        android:text="submit" />
+
+</LinearLayout>
+
+act2xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_marginTop="35dp"
+        android:layout_marginHorizontal="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="student information"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e2" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e4" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e5" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e6" />
+
+</LinearLayout>
+
+-----------------------------------------------------------------------------------
+
+slip -15
+succesfull login
+
+main act
+package com.example.loginscreen;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends Activity {
+    String email,password;
+    EditText e1,p1;
+    Button b1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        e1 = findViewById(R.id.e1);
+        p1 = findViewById(R.id.p1);
+        b1 = findViewById(R.id.b1);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                email = e1.getText().toString();
+                password = p1.getText().toString();
+
+                Intent i = new Intent(getApplicationContext(), New.class);
+                if (email.equals("abc@gmail.com") && password.equals("12345")) {
+                    i.putExtra("data", "Logged In!");
+                }
+                else
+                    i.putExtra("data", "Invalid Credentials");
+                startActivity(i);
+            }
+        });
+    }
+}
+new,ja
+package com.example.loginscreen;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class New extends Activity {
+    TextView t1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        t1 = findViewById(R.id.t1);
+        t1.setText(getIntent().getStringExtra("data"));
+    }
+}
+
+main xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="80dp"
+        android:hint="welcome!"
+        android:textSize="50sp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="20dp"
+        android:hint="Email"
+        android:textAlignment="center"
+        android:id="@+id/e1"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="20dp"
+        android:hint="password"
+        android:id="@+id/p1"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:text="login"
+        android:id="@+id/b1"
+        />
+</LinearLayout>
+
+actmain xml2
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login successful!"
+        android:id="@+id/t1"
+        />
+</LinearLayout>
+----------------------------------------------------------------------
+
+potrait and landscape
+
+slip 1 /3 
+
+main java
+
+package com.example.landscape;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+
+    TextView tv1 , tv2 ;
+    RadioGroup rbg1 ;
+    RadioButton rb1 , rb2 ;
+    Button b1 ;
+    float no ;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        tv1 = findViewById(R.id.tv1);
+        tv2 = findViewById(R.id.tv2);
+        rbg1 = findViewById(R.id.rbg1);
+        rb1 = findViewById(R.id.rb1);
+        rb2 = findViewById(R.id.rb2);
+        b1 = findViewById(R.id.b1);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(rb1.isChecked())
+                {
+                    no = Float.parseFloat(tv1.getText().toString());
+                    tv2.setText("Converted Rate is " + no/12);
+                }
+                if(rb2.isChecked())
+                {
+                    no = Float.parseFloat(tv1.getText().toString());
+                    tv2.setText("Converted Rate is " + no * 12);
+                }
+            }
+        });
+    }
+}
+
+main xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Convert Interest Rates"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:textSize="30dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rate to Convert % "
+            android:textSize="25dp"
+            android:layout_marginLeft="20dp"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv1"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/rbg1">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yearly to Monthly"
+            android:textSize="30dp"
+            android:id="@+id/rb1"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monthly to Yearly"
+            android:textSize="30dp"
+            android:id="@+id/rb2"/>
+    </RadioGroup>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Convert"
+        android:id="@+id/b1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv2"/>
+</LinearLayout>
+
+folder
+land-layout
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Convert Interest Rates"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:textSize="30dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rate to Convert % "
+            android:textSize="25dp"
+            android:layout_marginLeft="20dp"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv1"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/rbg1">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yearly to Monthly"
+            android:textSize="30dp"
+            android:id="@+id/rb1"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monthly to Yearly"
+            android:textSize="30dp"
+            android:id="@+id/rb2"/>
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Convert"
+            android:id="@+id/b1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv2"/>
+    </LinearLayout>
+</LinearLayout>
+----------------------------------------------------------------------------------------
+scroll view
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        >
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Button 1"
+          android:textSize="10sp"
+          android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 2"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 3"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 4"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 5"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 6"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 7"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 8"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 9"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 10"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 11"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 12"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+</ScrollView>
+-------------------------------------------------------------------------------
+
+call intent slip 7
+
+main xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+    <RelativeLayout
+        android:id="@+id/background_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#4F434343">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginLeft="125dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/tv1"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:src="@drawable/contact"
+        android:layout_below="@+id/tv1"
+        android:id="@+id/img1"
+        android:background="#467A6D6D"
+        />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv1"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="81dp"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@+id/img1"
+            android:text="Raviraj Salunkhe"
+            android:textSize="30dp"
+
+            android:textStyle="bold" />
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+91 8554891453"
+        android:id="@+id/tv3"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/img1"
+        android:background="#46000000"
+        />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+
+        android:src="@drawable/call"
+        android:layout_toRightOf="@+id/tv3"
+        android:layout_below="@id/tv2"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="20dp"
+        android:id="@id/call1"
+        />
+
+   <ImageView
+       android:layout_width="60dp"
+       android:layout_height="50dp"
+       android:src="@drawable/massege"
+       android:layout_toRightOf="@+id/call1"
+       android:layout_below="@+id/tv2"
+       android:layout_marginTop="120dp"
+       android:id="@+id/img2"
+       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ravi123@gmail.com"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/tv3"
+        android:id="@+id/tv4"
+        />
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/massege"
+        android:layout_toRightOf="@+id/tv4"
+        android:layout_below="@+id/img2"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        />
+
+    </RelativeLayout>
+</RelativeLayout>
+
+java main
+
+package com.example.slip7q2;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+    }
+
+    public void onClickMakeCalls(View view) {
+        Intent i = new Intent(Intent.ACTION_DIAL); // Corrected Intent constructor
+        Uri number = Uri.parse("tel:+911234567"); // Set the phone number to dial
+        i.setData(number); // Set the data URI for the intent
+        startActivity(i);
+    }
+
+}
+----------------------------------------------------------------------
